@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сайт с автозапуском звука</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    #playButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Добро пожаловать на мой сайт!</h1>
+  <p>Если звук не воспроизведётся автоматически, нажмите кнопку ниже.</p>
+
+  <!-- Подключаем аудиофайл -->
+  <audio id="mysound" src="sound.mp3" preload="auto"></audio>
+
+  <!-- Кнопка для запуска звука (на случай, если автозапуск не сработает) -->
+  <button id="playButton" style="display:none;">Включить звук</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var audio = document.getElementById('mysound');
+      var playButton = document.getElementById('playButton');
+
+      // Устанавливаем громкость на максимум (1.0)
+      audio.volume = 1.0;
+
+      // Пытаемся воспроизвести звук автоматически
+      var playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
+          // Автовоспроизведение успешно запущено
+          console.log("Аудио воспроизводится автоматически.");
+        }).catch(function(error) {
+          // Автовоспроизведение не удалось – показываем кнопку
+          console.log("Автовоспроизведение заблокировано, показываем кнопку для включения звука.", error);
+          playButton.style.display = 'inline-block';
+        });
+      }
+
+      // Если пользователь нажимает кнопку, воспроизводим звук
+      playButton.addEventListener('click', function() {
+        audio.play().then(function() {
+          playButton.style.display = 'none';
+        }).catch(function(error) {
+          console.error("Ошибка воспроизведения аудио:", error);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+i
