@@ -1,65 +1,63 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Сайт сбора денег Али на борьбу с аутизмом</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 50px;
-    }
-    #playButton {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на IQ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <h1>Добро пожаловать на мой сайт!</h1>
-  <p>Я Али, собираю деньги на лечение моего аутизма.</p>
+    <div class="container">
+        <h1>Тест на IQ</h1>
+        <button id="startTest">Пройти тест</button>
+        <div id="question" class="hidden">
+            <p>Введите ваше имя:</p>
+            <input type="text" id="nameInput">
+            <button onclick="checkIQ()">Ок</button>
+        </div>
+        <div id="result" class="hidden"></div>
+    </div>
 
-  <!-- Подключаем аудиофайл -->
-  <audio id="mysound" src="sound.mp3" preload="auto"></audio>
-
-  <!-- Кнопка для запуска звука (на случай, если автозапуск не сработает) -->
-  <button id="playButton" style="display:none;">Включить звук</button>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var audio = document.getElementById('mysound');
-      var playButton = document.getElementById('playButton');
-
-      // Устанавливаем громкость на максимум (1.0)
-      audio.volume = 1.0;
-
-      // Пытаемся воспроизвести звук автоматически
-      var playPromise = audio.play();
-
-      if (playPromise !== undefined) {
-        playPromise.then(function() {
-          // Автовоспроизведение успешно запущено
-          console.log("Аудио воспроизводится автоматически.");
-        }).catch(function(error) {
-          // Автовоспроизведение не удалось – показываем кнопку
-          console.log("Автовоспроизведение заблокировано, показываем кнопку для включения звука.", error);
-          playButton.style.display = 'inline-block';
+    <script>
+        document.getElementById('startTest').addEventListener('click', function() {
+            document.getElementById('startTest').classList.add('hidden');
+            document.getElementById('question').classList.remove('hidden');
         });
-      }
 
-      // Если пользователь нажимает кнопку, воспроизводим звук
-      playButton.addEventListener('click', function() {
-        audio.play().then(function() {
-          playButton.style.display = 'none';
-        }).catch(function(error) {
-          console.error("Ошибка воспроизведения аудио:", error);
-        });
-      });
-    });
-  </script>
+        function checkIQ() {
+            let name = document.getElementById('nameInput').value.trim().toLowerCase();
+            let resultDiv = document.getElementById('result');
+            let message = "";
+            
+            if (name === "али") {
+                message = "🎉 Поздравляем, ваш IQ: 0.5! 🎉";
+            } else if (name === "захар") {
+                message = "🎉 Поздравляем, ваш IQ: 305! 🎉";
+            } else {
+                message = "Не знаю, пройдите позже!";
+            }
+            
+            resultDiv.innerHTML = `<h2>${message}</h2>`;
+            document.getElementById('question').classList.add('hidden');
+            resultDiv.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
-i
